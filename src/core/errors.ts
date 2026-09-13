@@ -4,9 +4,6 @@ export type HarnessErrorCode =
   | 'RENDER_FAILED'
   | 'UNSUPPORTED_DEVICE'
   | 'BUDGET_EXCEEDED'
-  | 'STALE_RENDERER_GENERATION'
-  | 'INVALID_DESCRIPTOR'
-  | 'HARNESS_DISPOSED'
   | 'NONFINITE_VALUE';
 
 export class HarnessError extends Error {

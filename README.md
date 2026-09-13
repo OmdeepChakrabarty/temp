@@ -2,7 +2,7 @@
 
 A blueprint for a **capability platform**, not an example gallery: reusable Three.js capabilities, typed scene composition, machine-readable discovery, and an inspectable validation loop for AI coding agents.
 
-**Status: Gate 1 foundations in progress.** The repository has strict TypeScript, a tested transactional harness lifecycle (fixed-step frame phases, session swapping, renderer-generation safety, viewport propagation, and disposal), plus a metadata-only capability catalog with strict descriptor validation, deterministic discovery, and dependency closure. There is not yet a browser application, published capability, Three.js dependency set, or runnable scene.
+**Status: Gate 0 foundation in progress.** The repository now has a strict TypeScript configuration plus tested, renderer-free core primitives for resource scopes, leases, diagnostics, deterministic random streams, fixed-step time, and quality limits. There is not yet a browser application, capability catalog, Three.js dependency set, or runnable scene.
 
 ## Start here
 

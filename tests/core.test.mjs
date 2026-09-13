@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { FixedClock, HarnessError, RendererAccessController, ResourceScope, SeededRandom, createHarness, createLease, createViewport, deriveSeed, isRenderableViewport } from '../.test-dist/core/index.js';
+import { FixedClock, ResourceScope, SeededRandom, createLease, deriveSeed } from '../.test-dist/core/index.js';
 
 test('resource scopes dispose in reverse order and continue after cleanup failure', async () => {
   const scope = new ResourceScope();
@@ -49,43 +49,4 @@ test('fixed clock clamps wall delta, caps catch-up, and pauses without catch-up'
   assert.equal(clock.simulationTimeSeconds, before);
   clock.setPaused(false, 20);
   assert.equal(clock.advance(20 + 1 / 60).fixedFrames.length, 1);
-});
-
-test('viewport dimensions apply DPR exactly once and skip zero-sized rendering', () => {
-  const viewport = createViewport({ cssWidth: 101.5, cssHeight: 50, devicePixelRatio: 2, dprCap: 1.5 });
-  assert.deepEqual(viewport, { cssWidth: 101.5, cssHeight: 50, dpr: 1.5, pixelWidth: 152, pixelHeight: 75 });
-  assert.equal(isRenderableViewport(viewport), true);
-  assert.equal(isRenderableViewport(createViewport({ cssWidth: 0, cssHeight: 50, devicePixelRatio: 1, dprCap: 1 })), false);
-});
-
-test('renderer access serializes work and rejects stale renderer generations', async () => {
-  const access = new RendererAccessController();
-  const generation = access.rendererGeneration;
-  const order = [];
-  await Promise.all([
-    access.withAccess(generation, async () => { order.push('first'); }),
-    access.withAccess(generation, async () => { order.push('second'); }),
-  ]);
-  assert.deepEqual(order, ['first', 'second']);
-  access.invalidateGeneration();
-  await assert.rejects(access.withAccess(generation, () => undefined), (error) => error instanceof HarnessError && error.code === 'STALE_RENDERER_GENERATION');
-});
-
-test('harness commits sessions at frame boundaries, runs ordered hooks, and disposes replaced sessions', async () => {
-  const callbacks = [];
-  const events = [];
-  const scheduler = { request(callback) { callbacks.push(callback); return callbacks.length; }, cancel() {} };
-  const renderer = { device: { backend: 'webgl2', maxTextureSize: 1, maxSamples: 1, devicePixelRatio: 1, isSoftwareRenderer: true, features: [] }, resize() { events.push('resize'); }, updateWorldMatrices() { events.push('matrices'); }, dispose() { events.push('renderer-dispose'); } };
-  const session = (name) => ({ scene: {}, camera: {}, instances: [{ outputs: new Map(), hooks: { simulate() { events.push(`${name}:simulate`); }, evaluate() { events.push(`${name}:evaluate`); }, present() { events.push(`${name}:present`); } }, dispose() {} }], pipeline: { render() { events.push(`${name}:render`); }, resize() { events.push(`${name}:pipeline-resize`); }, dispose() {} }, dispose() { events.push(`${name}:dispose`); } });
-  const harness = createHarness({ renderer, scheduler, viewport: { cssWidth: 100, cssHeight: 100, devicePixelRatio: 1, dprCap: 2 } });
-  harness.commit(session('first'));
-  callbacks.shift()(0); callbacks.shift()(20);
-  assert.deepEqual(events.slice(0, 6), ['resize', 'first:pipeline-resize', 'first:evaluate', 'first:present', 'matrices', 'first:render']);
-  assert.ok(events.indexOf('first:simulate') < events.lastIndexOf('first:evaluate'));
-  harness.commit(session('second'));
-  callbacks.shift()(40);
-  assert.ok(events.includes('first:dispose'));
-  assert.ok(events.includes('second:render'));
-  await harness.dispose();
-  assert.ok(events.includes('second:dispose'));
 });
