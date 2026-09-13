@@ -2,7 +2,7 @@
 
 A blueprint for a **capability platform**, not an example gallery: reusable Three.js capabilities, typed scene composition, machine-readable discovery, and an inspectable validation loop for AI coding agents.
 
-**Status: architecture only. There is no runnable application, package manifest, shader implementation, asset download, or development container yet.** Commands and APIs below are implementation targets, not existing functionality.
+**Status: Gate 1 foundations in progress.** The repository has strict TypeScript, a tested transactional harness lifecycle (fixed-step frame phases, session swapping, renderer-generation safety, viewport propagation, and disposal), plus a metadata-only capability catalog with strict descriptor validation, deterministic discovery, and dependency closure. There is not yet a browser application, published capability, Three.js dependency set, or runnable scene.
 
 ## Start here
 
@@ -25,7 +25,7 @@ One TypeScript project, native browser UI, Vite development/build tooling, Three
 
 Use GitHub Codespaces for Node tooling and headless browser validation; the forwarded preview renders on the viewing browser's GPU. This repository currently lives on GitLab: publish or mirror it to a GitHub repository before creating a Codespace. No Codespaces provisioning is implied by these documents. No Colab dependency is required.
 
-After the implementation agent creates the toolchain, the intended workflow is `npm ci`, `npm run dev -- --host 0.0.0.0`, then discover → compose → preview → inspect → validate. Intended quality commands are specified in [tooling/DIRECTOR.md](tooling/DIRECTOR.md). Do not run them expecting the current documentation-only repository to work.
+The available foundation checks are `npm run typecheck` and `npm run test:unit`. The remaining toolchain commands are specified in [tooling/DIRECTOR.md](tooling/DIRECTOR.md) and are implemented incrementally with their owning delivery gates. Once the dependency set and lockfile are added, the intended preview workflow is `npm ci`, `npm run dev -- --host 0.0.0.0`, then discover → compose → preview → inspect → validate.
 
 ## Delivery order
 
