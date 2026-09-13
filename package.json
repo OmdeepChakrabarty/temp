@@ -1,0 +1,13 @@
+{
+  "name": "ai-native-three-animation-harness",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0 <25"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test:unit": "tsc --outDir .test-dist --noEmit false && node --test tests/**/*.test.mjs"
+  }
+}
