@@ -1,0 +1,12 @@
+export { FixedClock } from './clock.js';
+export type { ClockAdvance, FixedFrame } from './clock.js';
+export { Diagnostics } from './diagnostics.js';
+export type { Diagnostic, DiagnosticLevel, DiagnosticsSink } from './diagnostics.js';
+export { HarnessError, assertFinite } from './errors.js';
+export type { HarnessErrorCode } from './errors.js';
+export { QUALITY_LIMITS } from './quality.js';
+export type { QualityLimits, QualityProfile } from './quality.js';
+export { SeededRandom, deriveSeed } from './random.js';
+export { ResourceScope, createLease } from './scope.js';
+export type { Cleanup, Disposable, Lease } from './scope.js';
+export type { CapabilityFactory, CapabilityInstance, FrameContext, FramePhase, PrepareContext, PropertyHandle, TypedHandle, Viewport } from './types.js';
