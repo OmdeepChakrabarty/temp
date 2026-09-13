@@ -1,6 +1,6 @@
 import type { DiagnosticsSink } from './diagnostics.js';
 import type { QualityProfile } from './quality.js';
-import type { Lease, ResourceScope } from './scope.js';
+import type { ResourceScope } from './scope.js';
 
 export type Ownership = 'borrowed';
 export type FramePhase = 'simulation' | 'presentation' | 'camera';
@@ -26,39 +26,6 @@ export interface FrameContext {
   readonly simulationTimeSeconds: number;
   readonly presentationTimeSeconds: number;
   readonly interpolation: number;
-}
-
-export interface DeviceProfile {
-  readonly backend: 'webgl2';
-  readonly maxTextureSize: number;
-  readonly maxSamples: number;
-  readonly devicePixelRatio: number;
-  readonly isSoftwareRenderer: boolean;
-  readonly features: readonly string[];
-}
-
-export interface RendererAccess {
-  readonly rendererGeneration: number;
-  withAccess<T>(expectedGeneration: number, operation: () => Promise<T> | T): Promise<T>;
-}
-
-export interface EnvironmentBinding {
-  readonly prefilteredMap: unknown;
-  readonly intensity: number;
-  readonly rotationRadians: number;
-  readonly sourceId: string;
-  readonly rendererGeneration: number;
-  readonly iblModel: 'three-pmrem-cubeuv';
-}
-
-export interface AssetService {
-  acquire<T>(assetId: string, options: Readonly<{ signal: AbortSignal; colorRole?: 'srgb' | 'data' | 'linear-radiance' }>): Promise<Lease<T>>;
-}
-
-export interface RenderPipeline<Scene = unknown, Camera = unknown> {
-  render(scene: Scene, camera: Camera, frame: FrameContext): void;
-  resize(viewport: Viewport): void;
-  dispose(): void | Promise<void>;
 }
 
 export interface CapabilityInstance {
@@ -87,8 +54,6 @@ export interface PrepareContext {
   readonly diagnostics: DiagnosticsSink;
   readonly seed: number;
   readonly quality: QualityProfile;
-  readonly rendererAccess?: RendererAccess;
-  readonly assets?: AssetService;
 }
 
 export interface CapabilityFactory<P> {

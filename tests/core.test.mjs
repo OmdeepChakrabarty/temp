@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { FixedClock, HarnessError, RendererAccessController, ResourceScope, SeededRandom, createLease, createViewport, deriveSeed, isRenderableViewport } from '../.test-dist/core/index.js';
+import { FixedClock, ResourceScope, SeededRandom, createLease, deriveSeed } from '../.test-dist/core/index.js';
 
 test('resource scopes dispose in reverse order and continue after cleanup failure', async () => {
   const scope = new ResourceScope();
@@ -49,24 +49,4 @@ test('fixed clock clamps wall delta, caps catch-up, and pauses without catch-up'
   assert.equal(clock.simulationTimeSeconds, before);
   clock.setPaused(false, 20);
   assert.equal(clock.advance(20 + 1 / 60).fixedFrames.length, 1);
-});
-
-test('viewport dimensions apply DPR exactly once and skip zero-sized rendering', () => {
-  const viewport = createViewport({ cssWidth: 101.5, cssHeight: 50, devicePixelRatio: 2, dprCap: 1.5 });
-  assert.deepEqual(viewport, { cssWidth: 101.5, cssHeight: 50, dpr: 1.5, pixelWidth: 152, pixelHeight: 75 });
-  assert.equal(isRenderableViewport(viewport), true);
-  assert.equal(isRenderableViewport(createViewport({ cssWidth: 0, cssHeight: 50, devicePixelRatio: 1, dprCap: 1 })), false);
-});
-
-test('renderer access serializes work and rejects stale renderer generations', async () => {
-  const access = new RendererAccessController();
-  const generation = access.rendererGeneration;
-  const order = [];
-  await Promise.all([
-    access.withAccess(generation, async () => { order.push('first'); }),
-    access.withAccess(generation, async () => { order.push('second'); }),
-  ]);
-  assert.deepEqual(order, ['first', 'second']);
-  access.invalidateGeneration();
-  await assert.rejects(access.withAccess(generation, () => undefined), (error) => error instanceof HarnessError && error.code === 'STALE_RENDERER_GENERATION');
 });
