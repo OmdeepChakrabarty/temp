@@ -1,11 +1,11 @@
-```
 # Dependencies
 node_modules/
 
 # Build outputs
 dist/
 build/
-target/
+.target/
+.test-dist/
 
 # Logs
 *.log
@@ -46,4 +46,3 @@ htmlcov/
 *.temp
 .DS_Store
 Thumbs.db
-```

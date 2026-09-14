@@ -1,0 +1,15 @@
+{
+  "$id": "geometry.primitive.params.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["kind"],
+  "properties": {
+    "kind": { "type": "string", "enum": ["box","sphere","plane","torus","torusKnot"] },
+    "width": { "type": "number", "minimum": 0.001, "default": 1 },
+    "height": { "type": "number", "minimum": 0.001, "default": 1 },
+    "depth": { "type": "number", "minimum": 0.001, "default": 1 },
+    "radius": { "type": "number", "minimum": 0.001, "default": 1 },
+    "segments": { "type": "integer", "minimum": 3, "default": 32 },
+    "detail": { "type": "integer", "minimum": 1, "default": 3 }
+  }
+}

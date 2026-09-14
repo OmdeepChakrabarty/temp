@@ -1,0 +1,18 @@
+{
+  "id": "geometry.primitive",
+  "version": "1.0.0",
+  "name": "Geometry Primitive",
+  "category": "geometry",
+  "description": "Basic three-dimensional shapes",
+  "inputSchema": "./primitive.params.schema.json",
+  "inputs": {},
+  "outputs": { "geometry": { "kind": "geometry", "version": 1, "ownership": "borrowed" } },
+  "dependencies": [],
+  "compatibility": { "backend": "webgl2", "ibl": "preserves-host-pbr" },
+  "performance": { "costClass": "low", "complexity": "static buffer" },
+  "lifecycle": { "owned": ["geometry"], "seek": "none", "resize": "none", "contextRecovery": "reprepare" },
+  "examples": ["basic-pbr"],
+  "tags": ["primitive","geometry"],
+  "limitations": ["No deformation"],
+  "stability": "stable"
+}
