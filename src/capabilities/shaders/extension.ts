@@ -20,10 +20,12 @@ export const buildExtension = (spec: ExtensionSpec): string => {
   const uniforms = spec.uniforms.map(u => `uniform ${u.type} ${u.name};`).join('\n');
   const source = `
 // namespaced shader extension ${spec.id}@${spec.version}
+// hooks: vertex-position vertex-normal surface-color alpha-discard emissive final-linear-radiance
 ${uniforms}
-void shader_hook_${spec.id}() {
-  // hook stage applied per DIRECTOR
-}
+void shader_hook_${spec.id}_vertex_position() {}
+void shader_hook_${spec.id}_surface_color() {}
+void shader_hook_${spec.id}_alpha_discard() {}
+void shader_hook_${spec.id}_emissive() {}
 `;
   return source;
 };
