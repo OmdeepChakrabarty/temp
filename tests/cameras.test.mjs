@@ -11,7 +11,7 @@ test('descriptor validity', () => {
 
 test('preparePerspective uses real scope and cleans up', async () => {
   const scope = new ResourceScope();
-  const instance = await perspectiveFactory.prepare({ kind: 'perspective', fovDegrees: 60 }, new Map(), { scope, signal: new AbortController().signal, diagnostics: { report: () => {} }, seed: 1, quality: { dprCap: 1 } } as never);
+  const instance = await perspectiveFactory.prepare({ kind: 'perspective', fovDegrees: 60 }, new Map(), { scope, signal: new AbortController().signal, diagnostics: { report: () => {} }, seed: 1, quality: { dprCap: 1 } });
   assert.ok(instance.outputs.has('camera'));
   let disposed = false;
   const child = scope.child();
