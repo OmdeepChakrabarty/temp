@@ -1,0 +1,1 @@
+{"kind":"string","enum":["hdri","neutral"],"default":"hdri","sourceId":{"type":"string","description":"Approved asset manifest ID"},"intensity":{"type":"number","minimum":0,"default":1},"rotation":{"type":"number","default":0}}
