@@ -1,0 +1,1 @@
+{"kind":"string","enum":["directional","point","spot","studio"],"default":"directional","intensity":{"type":"number","minimum":0,"default":1},"color":{"type":"string","default":"#ffffff"},"shadowMapSize":{"type":"integer","enum":[512,1024,2048],"default":1024}}
