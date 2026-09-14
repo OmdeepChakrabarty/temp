@@ -1,0 +1,1 @@
+{"kind":"string","enum":["float","vec2","vec3","vec4","color","int"],"default":"float","defaultValue":{"type":"number"},"min":{"type":"number"},"max":{"type":"number"},"name":{"type":"string"}}
