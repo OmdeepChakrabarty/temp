@@ -1,0 +1,1 @@
+{"kind":"string","enum":["perspective","orbit","rail"],"default":"perspective","fovDegrees":{"type":"number","minimum":1,"maximum":180}}
