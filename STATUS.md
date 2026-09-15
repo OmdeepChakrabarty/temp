@@ -30,3 +30,4 @@ Next session must start by reading this file, not trusting chat summary.
 forceType declared but unused
 forceType is declared but currently unused
 forceType selection attempted but reverted to single-mode with isRepulsion guard; STATUS.md corrected.
+Particles final: seed exposed (system.seed), tick deterministic (simTime), forceType selection implemented via `const isRepulsion = forceType === "repulsion"` (line 75), 27/27 pass. GPU/surface morph/trails/point/surface-emitter-shapes deferred per DIRECTOR.md.

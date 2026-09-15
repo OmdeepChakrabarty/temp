@@ -102,7 +102,7 @@ export const cpuEmitterFactory: CapabilityFactory<CpuEmitterParams> = {
       }
     };
 
-    const system = { position: pos, velocity: vel, age, active, count, tick, reset: () => { emissionFraction = 0; freeHead = count; for (let i = 0; i < count; i++) active[i] = 0; }, getProgress: () => emissionFraction / (count / Math.max(0.1, lifetime)) };
+    const system = { seed, position: pos, velocity: vel, age, active, count, tick, reset: () => { emissionFraction = 0; freeHead = count; for (let i = 0; i < count; i++) active[i] = 0; }, getProgress: () => emissionFraction / (count / Math.max(0.1, lifetime)) };
     scope.ownDisposable({ dispose: () => { /* buffers released with scope */ } });
     const handle: TypedHandle = { kind: 'particle-system', version: 1, value: system, ownership: 'borrowed', features: ['cpu', 'seeded', 'fixed-capacity', 'tick', 'force', 'recycle'] };
     return { outputs: new Map([['particle-system', handle]]), dispose: () => scope.dispose() };
