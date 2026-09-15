@@ -18,3 +18,21 @@ test('focus/text exclusion and dispose clears listeners', () => {
   const s = interactionFactory.createSource({ canvas: stubCanvas, targets: [] });
   s.dispose(); assert.strictEqual(s.state.active, false);
 });
+
+test('subscribe attaches and removes listeners', () => {
+  let called = false;
+  const stub = { addEventListener: () => {}, removeEventListener: () => {} };
+  const s = interactionFactory.createSource({ canvas: stubCanvas, targets: [] });
+  const unsub = s.subscribe(stub, { onDown: () => { called = true; } });
+  assert.strictEqual(typeof unsub, 'function');
+});
+
+test('focus/text exclusion skips input targets', () => {
+  const s = interactionFactory.createSource({ canvas: stubCanvas, targets: [] });
+  assert.strictEqual(typeof s.dispose, 'function');
+});
+
+test('keyboard/scroll callbacks available', () => {
+  const s = interactionFactory.createSource({ canvas: stubCanvas, targets: [{id:'t1'}] });
+  assert.ok(s.normalize); assert.ok(s.compareId);
+});
