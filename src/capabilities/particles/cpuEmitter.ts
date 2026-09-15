@@ -43,7 +43,9 @@ export const cpuEmitterFactory: CapabilityFactory<CpuEmitterParams> = {
     freeHead = count;
 
     // Tick/update mechanism per DIRECTOR pseudocode
+    let simTime = 0; // deterministic simulated time, not wall-clock
     const tick = (dt: number) => {
+      simTime += dt; // accumulate simulated time for seed derivation
       emissionFraction += dt * emitRatePerSecond;
       // Spawn into free-index ring up to capacity
       while (emissionFraction >= 1 && freeHead > 0) {
@@ -51,7 +53,7 @@ export const cpuEmitterFactory: CapabilityFactory<CpuEmitterParams> = {
       const idx = (freeHead > 0) ? (freeIndex[freeHead - 1] as number) : 0;
       if (freeHead <= 0 || idx < 0 || idx >= count) break;
         if (idx >= count || idx < 0) break;
-        const r0 = seededRandom(seed + idx + Math.floor(Date.now() / 1000), idx); // deterministic with seed + index
+        const r0 = seededRandom(seed + idx, idx); // pure seed+index, no wall time
         active[idx] = 1;
         age[idx] = 0;
         pos[idx * 3] = (r0 - 0.5) * 2 * 0.5;
@@ -70,12 +72,12 @@ export const cpuEmitterFactory: CapabilityFactory<CpuEmitterParams> = {
       const dz = (pos[i * 3 + 2] as number) ?? 0;
         const distSq = dx * dx + dy * dy + dz * dz;
         const safeDist = Math.max(distSq, 1e-6); // cap near-zero
-        const forceMag = 0.1 / Math.sqrt(safeDist); // bounded
+        const forceMag = 0.1 / Math.sqrt(safeDist) * (isRepulsion ? -1 : 1);
         const ax = (forceMag * dx) / Math.sqrt(safeDist);
         const ay = (forceMag * dy) / Math.sqrt(safeDist);
         const az = (forceMag * dz) / Math.sqrt(safeDist);
         // Turbulence/noise sample (deterministic)
-        const noise = Math.sin(seed + i * 0.1 + Date.now() * 0.001) * 0.05; // approximate noise field; real noise from shader utilities borrowed
+        const noise = Math.sin((seed + i) * 0.1 + simTime) * 0.05; // deterministic turbulence from simulated time
         // Integration
         const v0 = vel[i * 3] as number; const v1 = vel[i * 3 + 1] as number; const v2 = vel[i * 3 + 2] as number;
         vel[i * 3] = v0 + (ax + noise) * dt;

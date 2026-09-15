@@ -27,3 +27,5 @@ Build/test verification at this commit (run independently, not summarized):
 - `node --check tests/environment.test.mjs`: 0
 
 Next session must start by reading this file, not trusting chat summary.
+forceType declared but unused
+forceType is declared but currently unused
