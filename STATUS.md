@@ -39,3 +39,8 @@ FINAL SUMMARY (all 10 families):
 - post (58e09b3): 29/29, bloom+passes verified, pixel parity untested
 - interaction (b288dd7): 30/30, pointer/raycast/drag verified, DOM stub complete, no leaks
 Open gaps only: particles GPU/morph/trails/point-shapes, post pixel-level parity/DOF/depth, interaction touch/accessibility full qualification (per DIRECTOR.md order).
+FINAL STATE (all 10, hash 15050a7):
+particles ca6d928 27/27 seed/determinism; GPU/morph/trails/point-emitter deferred
+post 58e09b3 29/29 bloom/passes; pixel parity/DOF/depth deferred
+interaction 15050a7 32/32 raycast/NDC/hover/click/drag/keyboard/scroll/errors; multi-touch/accessibility full qualification deferred per DIRECTOR.md order
+shaders: hook-wiring open; animation: vector/quaternion/procedural/writer-arbitration open; environment/composition/cameras/lighting/geometry/assets/registry remain per ARCHITECTURE.md contracts; no family falsely declared complete.

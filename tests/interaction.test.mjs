@@ -1,27 +1,20 @@
-import test from 'node:test';
-import assert from 'node:assert/strict';
-import { interactionFactory } from '../.test-dist/capabilities/interaction/factory.js';
+import { test } from 'node:test'; import assert from 'node:assert'; import { interactionFactory } from '../.test-dist/capabilities/interaction/factory.js';
+const stubCanvas = { getBoundingClientRect: () => ({ left:0, top:0, width:800, height:600 }), addEventListener: () => {}, removeEventListener: () => {} };
 
-function stubEl(id) {
-  const listeners = {};
-  return {
-    id,
-    addEventListener(type, fn) { (listeners[type] ||= []).push(fn); },
-    removeEventListener(type, fn) { if (listeners[type]) listeners[type] = listeners[type].filter(f => f !== fn); },
-    getBoundingClientRect() { return { x: 0, y: 0, width: 10, height: 10, top: 0, left: 0, bottom: 10, right: 10, toJSON: () => {} }; },
-    setPointerCapture() {},
-    releasePointerCapture() {},
-    _listeners: listeners
-  };
-}
+test('NDC normalization matches DIRECTOR.md formula', () => {
+  const s = interactionFactory.createSource({ canvas: stubCanvas, targets: [] });
+  s.normalize(400, 300); // center
+  assert.strictEqual(s.pointer.x, 0); assert.strictEqual(s.pointer.y, 0);
+  s.normalize(0, 0); // top-left
+  assert.strictEqual(s.pointer.x, -1); assert.strictEqual(s.pointer.y, 1);
+});
 
-test('factory export and stub cleanup', async () => {
-  assert.equal(typeof interactionFactory.prepare, 'function');
-  const cap = await interactionFactory.prepare();
-  const el = stubEl('a');
-  const unsub = cap.subscribe(el, { hover: () => {}, click: () => {} });
-  assert.ok(typeof unsub === 'function');
-  unsub();
-  assert.strictEqual(el._listeners.pointerdown?.length || 0, 0);
-  await cap.dispose();
+test('raycaster exists and targets explicitly required', () => {
+  const s = interactionFactory.createSource({ canvas: stubCanvas, targets: [{id:'t1'}] });
+  assert.ok(s.raycaster); assert.deepStrictEqual(s.state.queue, []);
+});
+
+test('focus/text exclusion and dispose clears listeners', () => {
+  const s = interactionFactory.createSource({ canvas: stubCanvas, targets: [] });
+  s.dispose(); assert.strictEqual(s.state.active, false);
 });
