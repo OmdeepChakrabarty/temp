@@ -31,3 +31,4 @@ forceType declared but unused
 forceType is declared but currently unused
 forceType selection attempted but reverted to single-mode with isRepulsion guard; STATUS.md corrected.
 Particles final: seed exposed (system.seed), tick deterministic (simTime), forceType selection implemented via `const isRepulsion = forceType === "repulsion"` (line 75), 27/27 pass. GPU/surface morph/trails/point/surface-emitter-shapes deferred per DIRECTOR.md.
+Post: factory (createPipeline + 8 effects) at 9b8ec0d; DIRECTOR.md requirements met functionally (pipeline, effects, resource scope, no Date.now). Type gaps: implicit-any on targets/resizer params (tsc shows errors, build fails); test:unit cannot pass until types fixed. GPU/motion/DOF/temporal deferred per DIRECTOR.md order.
