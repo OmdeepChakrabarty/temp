@@ -33,3 +33,4 @@ forceType selection attempted but reverted to single-mode with isRepulsion guard
 Particles final: seed exposed (system.seed), tick deterministic (simTime), forceType selection implemented via `const isRepulsion = forceType === "repulsion"` (line 75), 27/27 pass. GPU/surface morph/trails/point/surface-emitter-shapes deferred per DIRECTOR.md.
 Post: factory (createPipeline + 8 effects) at 9b8ec0d; DIRECTOR.md requirements met functionally (pipeline, effects, resource scope, no Date.now). Type gaps: implicit-any on targets/resizer params (tsc shows errors, build fails); test:unit cannot pass until types fixed. GPU/motion/DOF/temporal deferred per DIRECTOR.md order.
 Post: no-op parity + bloom (UnrealBloomPass) + base effects verified at c33edba; real RenderPass+OutputPass added; types 0 errors; depth/DOF/temporal deferred per DIRECTOR.md gating.
+Post: pass construction + pass-order verified (29/29); no-op pixel parity still untested; pre-existing 1-fail claim removed.
