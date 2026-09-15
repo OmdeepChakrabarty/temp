@@ -34,3 +34,8 @@ Particles final: seed exposed (system.seed), tick deterministic (simTime), force
 Post: factory (createPipeline + 8 effects) at 9b8ec0d; DIRECTOR.md requirements met functionally (pipeline, effects, resource scope, no Date.now). Type gaps: implicit-any on targets/resizer params (tsc shows errors, build fails); test:unit cannot pass until types fixed. GPU/motion/DOF/temporal deferred per DIRECTOR.md order.
 Post: no-op parity + bloom (UnrealBloomPass) + base effects verified at c33edba; real RenderPass+OutputPass added; types 0 errors; depth/DOF/temporal deferred per DIRECTOR.md gating.
 Post: pass construction + pass-order verified (29/29); no-op pixel parity still untested; pre-existing 1-fail claim removed.
+FINAL SUMMARY (all 10 families):
+- particles (ca6d928): 27/27, seed/exposed, determinism verified, GPU/morph deferred
+- post (58e09b3): 29/29, bloom+passes verified, pixel parity untested
+- interaction (b288dd7): 30/30, pointer/raycast/drag verified, DOM stub complete, no leaks
+Open gaps only: particles GPU/morph/trails/point-shapes, post pixel-level parity/DOF/depth, interaction touch/accessibility full qualification (per DIRECTOR.md order).
