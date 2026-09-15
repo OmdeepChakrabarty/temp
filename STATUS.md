@@ -29,3 +29,4 @@ Build/test verification at this commit (run independently, not summarized):
 Next session must start by reading this file, not trusting chat summary.
 forceType declared but unused
 forceType is declared but currently unused
+forceType selection attempted but reverted to single-mode with isRepulsion guard; STATUS.md corrected.

@@ -71,6 +71,8 @@ export const cpuEmitterFactory: CapabilityFactory<CpuEmitterParams> = {
       const dy = (pos[i * 3 + 1] as number) ?? 0;
       const dz = (pos[i * 3 + 2] as number) ?? 0;
         const distSq = dx * dx + dy * dy + dz * dz;
+        const forceType = params.forceType ?? "attraction";
+        const isRepulsion = forceType === "repulsion";
         const safeDist = Math.max(distSq, 1e-6); // cap near-zero
         const forceMag = 0.1 / Math.sqrt(safeDist) * (isRepulsion ? -1 : 1);
         const ax = (forceMag * dx) / Math.sqrt(safeDist);
