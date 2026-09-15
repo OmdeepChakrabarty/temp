@@ -44,4 +44,4 @@ particles ca6d928 27/27 seed/determinism; GPU/morph/trails/point-emitter deferre
 post 58e09b3 29/29 bloom/passes; pixel parity/DOF/depth deferred
 interaction 15050a7 32/32 raycast/NDC/hover/click/drag/keyboard/scroll/errors; multi-touch/accessibility full qualification deferred per DIRECTOR.md order
 shaders: hook-wiring open; animation: vector/quaternion/procedural/writer-arbitration open; environment/composition/cameras/lighting/geometry/assets/registry remain per ARCHITECTURE.md contracts; no family falsely declared complete.
-interaction b8fdd57 35/35; real subscribe/remove/keyboard/scroll/hover/click/drag/errors; multi-touch/accessibility qualification deferred per DIRECTOR.md order.
+interaction 7c8e132 (honest): raycaster/NDC real; pointerdown/keydown/wheel attach real; pointermove/pointerup/pointerover MISSING -> hover/click/drag non-functional; click-threshold/drag-plane/error codes only in comments; emitError unused; unsubscribe leaks keydown/wheel refs; least complete of 10.
